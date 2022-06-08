@@ -41,3 +41,14 @@
 #
 #  >>> Escriba su codigo a partir de este punto <<<
 #
+docker run --rm -it --name hadoop -p 25565:50070 -p 8088:8088 -p 8888:8888 -v "%cd%":/workspace jdvelasq/hadoop:2.10.1
+tr '/' '-' < data.csv >t1
+sed 's/-\([0-9][0-9]\)\;/-20\1\;/' t1 > t2
+sed 's/\([0-9]\)-\([0-9]\)-/0\1-0\2-/' t2 > t3
+sed 's/\([0-9][0-9]\)-\([0-9][0-9]\)-\([0-9][0-9][0-9][0-9]\)\;/\3-\2-\1\;/' t3 > t4
+sed 's/\;\;/\;\\N\;/' t4 | sed 's/\;n/;\\N/' | sed 's/\;N\;/\;\\N\;/' > t5
+sed 's/\;\\n\;/\;\\N\;/' t5 | sed 's/\;[a-z]\;/\U&/g' > t6
+sed 's/\\N\;$/\\N\;\\N/' t6 > t7
+tr ';' ',' < t7 | sed 's/\,\([0-9][0-9][0-9]\)\,\([0-9]\)/\,\1\.\2/' > t8
+cp t8 output.csv
+
