@@ -50,4 +50,5 @@ sed 's/\;\;/\;\\N\;/' t4 | sed 's/\;n/;\\N/' | sed 's/\;N\;/\;\\N\;/' > t5
 sed 's/\;\\n\;/\;\\N\;/' t5 | sed 's/\;[a-z]\;/\U&/g' > t6
 sed 's/\\N\;$/\\N\;\\N/' t6 > t7
 tr ';' ',' < t7 | sed 's/\,\([0-9][0-9][0-9]\)\,\([0-9]\)/\,\1\.\2/' > t8
-$ bash question.sh data.csv > output.csv
+cp t8 output.csv
+
